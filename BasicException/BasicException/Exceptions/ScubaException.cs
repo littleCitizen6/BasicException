@@ -7,16 +7,17 @@ namespace BasicException.Exceptions
 {
     public class ScubaException : Exception
     {
-
+        private string _message;
         private string _userName;
-        public override string Message => $"hey {_userName}, you have a scuba exception please check your scuba ";
-        public ScubaException()
-        {
-            _userName = Environment.UserName;
-        }
+        public override string Message => _message;
+
 
         public ScubaException(string message) : base(message)
         {
+            _userName = Environment.UserName;
+            _message = $"hey {_userName}, {message}";
+
+
         }
     }
 }
