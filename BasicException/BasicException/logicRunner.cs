@@ -66,17 +66,60 @@ namespace BasicException
 
         public int Logic3(string data)
         {
-            return Int32.Parse(data);
+            int checkValidity;
+            if(!Int32.TryParse(data, out checkValidity))
+            {
+                throw new ScubaException("cannot parse to int, check the data that given");
+            }
+            return _logic.Logic3(data);
         }
 
         public void Logic4(string data1, int data2, long data3)
         {
-            throw new NotImplementedException("This method is not implemeted");
+            try
+            {
+                _logic.Logic4(data1, data2, data3);
+            }
+            catch(NotImplementedException e)
+            {
+                Console.WriteLine("the function isnt impemented");
+            }
         }
 
         public void Logic5(string dllName)
         {
-            Assembly.LoadFrom(dllName);
+            try
+            {
+                _logic.Logic5(dllName);
+            }
+            catch (ArgumentNullException e) 
+            { 
+                Console.WriteLine("assemblyFile is null");
+            }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine("assemblyFile is not found, or the module you are trying to load does not specify a filename extension."); }
+            catch (FileLoadException e) 
+            {
+                Console.WriteLine("A file that was found could not be loaded"); 
+            }
+            catch (BadImageFormatException e)
+            {
+                Console.WriteLine("assemblyFile is not a valid assembly");
+            }
+            catch (SecurityException e) 
+            {
+                Console.WriteLine("A codebase that does not start with 'file://' was specified without the requiredSystem.Net.WebPermission."); 
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine("The assemblyFile parameter is an empty string");
+            }
+            catch (PathTooLongException e) 
+            {
+                Console.WriteLine("The assembly name exceeds the system-defined maximum length"); 
+            }
+            
         }
 
     }
